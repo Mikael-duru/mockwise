@@ -51,6 +51,7 @@ interface InterviewCardProps {
 interface AgentProps {
 	userName: string;
 	userId?: string;
+	userPhotoURL?: string;
 	interviewId?: string;
 	feedbackId?: string;
 	type: "generate" | "interview";

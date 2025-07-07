@@ -266,7 +266,7 @@
 	}
 
 	.card-cta {
-		@apply flex max-lg:flex-col flex-row blue-gradient-dark rounded-3xl xl:px-16 py-6 items-center justify-between max-sm:px-4 lg:px-8;
+		@apply flex max-lg:flex-col flex-row blue-gradient-dark rounded-3xl xl:px-16 py-6 items-center justify-between px-8;
 	}
 
 	.interviews-section {

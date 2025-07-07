@@ -19,7 +19,7 @@ const Home = () => {
 					</p>
 
 					<Button
-						className="btn-primary w-[250px] max-lg:mt-3 animate-bounce"
+						className="btn-primary w-[250px] max-lg:mt-3 animate-bounce hover:animate-none active:scale-95 transition-transform"
 						asChild
 					>
 						<Link href="/interview">Start an Interview</Link>

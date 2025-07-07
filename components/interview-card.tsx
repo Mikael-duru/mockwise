@@ -62,7 +62,10 @@ const InterviewCard = ({
 						<TechIcons techStack={techStack} />
 					</div>
 
-					<Button className="btn-primary flex-1" asChild>
+					<Button
+						className="btn-primary flex-1 active:scale-95 transition-transform duration-300"
+						asChild
+					>
 						<Link
 							href={
 								feedback
