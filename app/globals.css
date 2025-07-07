@@ -266,11 +266,11 @@
 	}
 
 	.card-cta {
-		@apply flex flex-row blue-gradient-dark rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4;
+		@apply flex max-lg:flex-col flex-row blue-gradient-dark rounded-3xl xl:px-16 py-6 items-center justify-between max-sm:px-4 lg:px-8;
 	}
 
 	.interviews-section {
-		@apply flex flex-wrap gap-4 max-lg:flex-col w-full items-stretch;
+		@apply grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))] max-sm:grid-cols-1;
 	}
 
 	.interview-text {
@@ -303,7 +303,7 @@
 }
 
 @utility pattern {
-	@apply bg-[url('/pattern.svg')] bg-top bg-no-repeat bg-cover;
+	@apply bg-[url('/pattern.svg')] bg-top bg-no-repeat;
 }
 
 @utility blue-gradient-dark {

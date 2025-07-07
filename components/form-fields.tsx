@@ -14,6 +14,7 @@ interface FormFieldProps<T extends FieldValues> {
 	label: string;
 	placeholder?: string;
 	type?: "text" | "password" | "email" | "file";
+	isLoading?: boolean;
 }
 
 export const FormField = <T extends FieldValues>({
@@ -22,6 +23,7 @@ export const FormField = <T extends FieldValues>({
 	label,
 	placeholder,
 	type = "text",
+	isLoading,
 }: FormFieldProps<T>) => (
 	<Controller
 		control={control}
@@ -35,6 +37,7 @@ export const FormField = <T extends FieldValues>({
 					<Input
 						id={name}
 						type={type}
+						disabled={isLoading}
 						className="input"
 						placeholder={placeholder}
 						{...field}

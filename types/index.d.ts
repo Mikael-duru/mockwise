@@ -35,6 +35,7 @@ interface CreateFeedbackParams {
 interface User {
 	name: string;
 	email: string;
+	photoURL: string;
 	id: string;
 }
 
@@ -76,14 +77,14 @@ interface SignInParams {
 	idToken: string;
 }
 
-interface SignUpParams {
+interface CreateUserParams {
 	uid: string;
 	name: string;
 	email: string;
-	password: string;
+	photoURL: string;
 }
 
-type FormType = "sign-in" | "sign-up";
+type FormType = "sign-in" | "sign-up" | "reset-password";
 
 interface InterviewFormProps {
 	interviewId: string;
