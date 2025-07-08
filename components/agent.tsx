@@ -13,8 +13,8 @@ enum CallStatus {
 }
 
 const Agent = ({ userName, userPhotoURL }: AgentProps) => {
-	const callStatus = CallStatus.CONNECTING;
-	const isSpeaking = true;
+	const callStatus = CallStatus.INACTIVE;
+	const isSpeaking = false;
 
 	const messages = [
 		"What is your name",
@@ -90,7 +90,7 @@ const Agent = ({ userName, userPhotoURL }: AgentProps) => {
 									alt="call"
 									width={20}
 									height={20}
-									className="object-cover mx-auto -mt-2 py-1"
+									className="object-cover mx-auto -mt-[7px] py-1.5"
 								/>
 							)}
 						</span>
