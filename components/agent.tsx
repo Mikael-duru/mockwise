@@ -1,9 +1,14 @@
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import { useRouter } from "next/navigation";
+import { UserCheck2Icon } from "lucide-react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { UserCheck2Icon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
+import { vapi } from "@/lib/vapi.sdk";
+import { toast } from "sonner";
 
 enum CallStatus {
 	INACTIVE = "INACTIVE",
@@ -12,16 +17,80 @@ enum CallStatus {
 	FINISHED = "FINISHED",
 }
 
-const Agent = ({ userName, userPhotoURL }: AgentProps) => {
-	const callStatus = CallStatus.INACTIVE;
-	const isSpeaking = false;
+interface SavedMessage {
+	role: "user" | "system" | "assistant";
+	content: string;
+}
 
-	const messages = [
-		"What is your name",
-		"My name is John Doe, Nice to meet you!",
-	];
+const Agent = ({ userName, userPhotoURL, userId, type }: AgentProps) => {
+	const router = useRouter();
+	const [isSpeaking, setIsSpeaking] = useState(false);
+	const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
+	const [messages, setMessages] = useState<SavedMessage[]>([]);
+	const firstName = userName.split(" ")[0];
 
-	const lastMessage = messages[messages.length - 1];
+	useEffect(() => {
+		const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
+		const onCallEnd = () => setCallStatus(CallStatus.FINISHED);
+
+		const onMessage = (message: Message) => {
+			if (message.type === "transcript" && message.transcriptType === "final") {
+				const newMessage = { role: message.role, content: message.transcript };
+
+				setMessages((prev) => [...prev, newMessage]);
+			}
+		};
+
+		const onSpeechStart = () => setIsSpeaking(true);
+		const onSpeechEnd = () => setIsSpeaking(false);
+
+		const onError = (error: Error) => {
+			console.log("Vapi_Error:", error);
+			toast.error(error?.message || "Call has ended.");
+		};
+
+		vapi.on("call-start", onCallStart);
+		vapi.on("call-end", onCallEnd);
+		vapi.on("message", onMessage);
+		vapi.on("speech-start", onSpeechStart);
+		vapi.on("speech-end", onSpeechEnd);
+		vapi.on("error", onError);
+
+		return () => {
+			vapi.off("call-start", onCallStart);
+			vapi.off("call-end", onCallEnd);
+			vapi.off("message", onMessage);
+			vapi.off("speech-start", onSpeechStart);
+			vapi.off("speech-end", onSpeechEnd);
+			vapi.off("error", onError);
+		};
+	}, []);
+
+	useEffect(() => {
+		if (callStatus === CallStatus.FINISHED) router.push("/");
+	}, [messages, callStatus, type, userId]);
+
+	const handleCall = async () => {
+		setCallStatus(CallStatus.CONNECTING);
+
+		await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
+			variableValues: {
+				username: firstName,
+				userid: userId,
+			},
+		});
+	};
+
+	const handleEndCall = async () => {
+		setCallStatus(CallStatus.FINISHED);
+
+		vapi.stop();
+	};
+
+	const latestMessage = messages[messages.length - 1]?.content;
+
+	const isCallInactiveOrFinished =
+		callStatus === CallStatus.INACTIVE || callStatus === CallStatus.FINISHED;
 
 	return (
 		<>
@@ -63,9 +132,9 @@ const Agent = ({ userName, userPhotoURL }: AgentProps) => {
 								"opacity-0 transition-opacity duration-500",
 								"animate-fadeIn opacity-100"
 							)}
-							key={lastMessage}
+							key={latestMessage}
 						>
-							{lastMessage}
+							{latestMessage}
 						</p>
 					</div>
 				</div>
@@ -73,30 +142,29 @@ const Agent = ({ userName, userPhotoURL }: AgentProps) => {
 
 			<div className="w-full flex justify-center">
 				{callStatus !== "ACTIVE" ? (
-					<button className="relative btn-call active:scale-95 transition-transform duration-300">
+					<button
+						className="relative btn-call active:scale-95 transition-transform"
+						onClick={handleCall}
+						aria-label={isCallInactiveOrFinished ? "Start Call" : "Connecting"}
+						disabled={!isCallInactiveOrFinished}
+					>
 						<span
 							className={cn(
-								"absolute animate-ping rounded-full opacity-75",
+								"absolute inset-0 bg-green-100 animate-ping rounded-full opacity-50",
 								callStatus !== "CONNECTING" && "hidden"
 							)}
 						/>
 
 						<span>
-							{callStatus === "INACTIVE" || callStatus === "FINISHED" ? (
-								"Call"
-							) : (
-								<Image
-									src={"/calling.gif"}
-									alt="call"
-									width={20}
-									height={20}
-									className="object-cover mx-auto -mt-[7px] py-1.5"
-								/>
-							)}
+							{isCallInactiveOrFinished ? "Start Call" : "Connecting..."}
 						</span>
 					</button>
 				) : (
-					<button className="btn-disconnect active:scale-95 transition-transform duration-300">
+					<button
+						aria-label="End Call"
+						className="btn-disconnect active:scale-95 transition-transform duration-300"
+						onClick={handleEndCall}
+					>
 						End Call
 					</button>
 				)}
