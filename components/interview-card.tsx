@@ -8,10 +8,11 @@ import Link from "next/link";
 import TechIcons from "./tech-icons";
 
 const InterviewCard = ({
-	interviewId,
+	id,
 	userId,
 	role,
 	type,
+	coverImage,
 	techStack,
 	createdAt,
 }: InterviewCardProps) => {
@@ -30,7 +31,7 @@ const InterviewCard = ({
 					</div>
 
 					<Image
-						src={getRandomInterviewCover()}
+						src={coverImage}
 						alt="interview cover"
 						width={90}
 						height={90}
@@ -68,9 +69,7 @@ const InterviewCard = ({
 					>
 						<Link
 							href={
-								feedback
-									? `/interview/${interviewId}/feedback`
-									: `/interview/${interviewId}/`
+								feedback ? `/interview/${id}/feedback` : `/interview/${id}/`
 							}
 						>
 							{feedback ? "View Feedback" : "Take Interview"}

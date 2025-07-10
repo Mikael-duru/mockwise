@@ -17,6 +17,7 @@ interface Interview {
 	id: string;
 	role: string;
 	level: string;
+	coverImage: string;
 	questions: string[];
 	techStack: string[];
 	createdAt: string;
@@ -26,7 +27,7 @@ interface Interview {
 }
 
 interface CreateFeedbackParams {
-	interviewId: string;
+	interviewId: Interview["id"];
 	userId: string;
 	transcript: { role: string; content: string }[];
 	feedbackId?: string;
@@ -40,10 +41,11 @@ interface User {
 }
 
 interface InterviewCardProps {
-	interviewId?: string;
+	id?: Interview["id"];
 	userId?: string;
 	role: string;
 	type: string;
+	coverImage: string;
 	techStack: string[];
 	createdAt?: string;
 }
@@ -52,7 +54,7 @@ interface AgentProps {
 	userName: string;
 	userId?: string;
 	userPhotoURL?: string;
-	interviewId?: string;
+	interviewId?: Interview["id"];
 	feedbackId?: string;
 	type: "generate" | "interview";
 	questions?: string[];
@@ -64,7 +66,7 @@ interface RouteParams {
 }
 
 interface GetFeedbackByInterviewIdParams {
-	interviewId: string;
+	interviewId: Interview["id"];
 	userId: string;
 }
 
@@ -88,7 +90,7 @@ interface CreateUserParams {
 type FormType = "sign-in" | "sign-up" | "reset-password";
 
 interface InterviewFormProps {
-	interviewId: string;
+	interviewId: Interview["id"];
 	role: string;
 	level: string;
 	type: string;

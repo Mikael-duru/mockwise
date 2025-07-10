@@ -35,3 +35,11 @@ export const getCommunityInterviews = async (
 		...doc.data(),
 	})) as Interview[];
 };
+
+export const getInterviewById = async (
+	id: string
+): Promise<Interview | null> => {
+	const interview = await db.collection("interviews").doc(id).get();
+
+	return interview.data() as Interview | null;
+};

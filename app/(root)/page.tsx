@@ -15,8 +15,8 @@ const Home = async () => {
 	const user = await getCurrentUser();
 
 	const [userInterviews, communityInterviews] = await Promise.all([
-		await getInterviewsByUserId(user?.id!),
-		await getCommunityInterviews({ userId: user?.id! }),
+		await getInterviewsByUserId(user?.id as string),
+		await getCommunityInterviews({ userId: user?.id as string }),
 	]);
 
 	const hasPastInterviews = (userInterviews ?? [])?.length > 0;
