@@ -131,10 +131,10 @@ const AuthForm = ({ type }: { type: FormType }) => {
 	const isSignUp = type === "sign-up";
 
 	return (
-		<div className="relative card-border w-full max-w-[566px]">
+		<div className="relative card-border w-full max-w-[566px] my-2">
 			<div className="flex flex-col gap-6 card max-sm:px-6 py-14 px-10">
 				<div className="flex flex-row gap-2 items-center justify-start mb-4">
-					<Image src={"/logo.svg"} alt="logo" width={28} height={22} />
+					<Image src={"/logo.png"} alt="logo" width={34} height={28} />
 					<p className="text-primary-100 text-2xl">MockWise</p>
 				</div>
 

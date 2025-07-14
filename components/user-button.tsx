@@ -45,7 +45,7 @@ const UserButton = ({ user }: { user: User }) => {
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger>
-				<Avatar className="w-12 h-12 shrink-0 border border-primary-foreground hover:border-transparent hover:ring-4 hover:ring-zinc-600/50 transition-colors transition-shadow duration-300 cursor-pointer">
+				<Avatar className="w-12 h-12 shrink-0 border border-primary-foreground hover:border-2 hover:border-neutral-600/50 transition-colors transition-shadow duration-300 cursor-pointer">
 					<AvatarImage
 						src={photoURL || user?.photoURL}
 						alt={`@${user?.name}`}
@@ -84,7 +84,7 @@ const UserButton = ({ user }: { user: User }) => {
 						<div className="flex items-center justify-center w-12 h-12 shrink-0 pl-5">
 							<Settings />
 						</div>
-						<p>Manage account</p>
+						<p className="text-inherit">Manage account</p>
 					</div>
 				</DropdownMenuItem>
 				<DropdownMenuItem
@@ -95,7 +95,7 @@ const UserButton = ({ user }: { user: User }) => {
 						<div className="flex items-center justify-center w-12 h-12 shrink-0 pl-5">
 							<LogOut />
 						</div>
-						<p>Sign out</p>
+						<p className="text-inherit">Sign out</p>
 					</div>
 				</DropdownMenuItem>
 			</DropdownMenuContent>

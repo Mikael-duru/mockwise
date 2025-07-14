@@ -7,8 +7,8 @@ const Header = async ({ user }: { user: User }) => {
 	return (
 		<header>
 			<div className="flex justify-between items-center">
-				<Link href={"/"} className="flex items-center gap-2">
-					<Image src={"/logo.svg"} alt="logo" width={36} height={30} />
+				<Link href={"/"} className="flex items-center gap-1">
+					<Image src={"/logo.png"} alt="logo" width={36} height={28} />
 					<h2 className="text-primary-100">MockWise</h2>
 				</Link>
 
