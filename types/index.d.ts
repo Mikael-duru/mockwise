@@ -44,7 +44,7 @@ interface User {
 
 interface InterviewCardProps {
 	id?: Interview["id"];
-	currentUserId?: string;
+	userId?: string;
 	role: string;
 	type: string;
 	coverImage: string;

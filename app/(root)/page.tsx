@@ -58,11 +58,7 @@ const Home = async () => {
 				<div className="interviews-section">
 					{hasPastInterviews ? (
 						userInterviews?.map((interview: Interview) => (
-							<InterviewCard
-								key={interview.id}
-								{...interview}
-								currentUserId={user?.id}
-							/>
+							<InterviewCard key={interview.id} {...interview} />
 						))
 					) : (
 						<p className="pt-5 flex items-center gap-3 col-span-4">
@@ -84,11 +80,7 @@ const Home = async () => {
 				<div className="interviews-section">
 					{hasCommunityInterviews ? (
 						communityInterviews?.map((interview: Interview) => (
-							<InterviewCard
-								key={interview.id}
-								{...interview}
-								currentUserId={user?.id}
-							/>
+							<InterviewCard key={interview.id} {...interview} />
 						))
 					) : (
 						<p className="pt-5 flex items-center gap-3 col-span-4">

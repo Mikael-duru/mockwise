@@ -9,7 +9,7 @@ import { getFeedbackByIds } from "@/lib/actions/interview.action";
 
 const InterviewCard = async ({
 	id,
-	currentUserId,
+	userId,
 	role,
 	type,
 	coverImage,
@@ -18,8 +18,8 @@ const InterviewCard = async ({
 }: InterviewCardProps) => {
 	let feedback = null;
 
-	if (currentUserId && id) {
-		feedback = await getFeedbackByIds({ interviewId: id, currentUserId });
+	if (userId && id) {
+		feedback = await getFeedbackByIds({ interviewId: id });
 	}
 
 	const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
