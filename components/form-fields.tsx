@@ -11,10 +11,11 @@ import { Control, Controller, FieldValues, Path } from "react-hook-form";
 interface FormFieldProps<T extends FieldValues> {
 	name: Path<T>;
 	control: Control<T>;
-	label: string;
+	label?: string;
 	placeholder?: string;
-	type?: "text" | "password" | "email" | "file";
+	type?: "text" | "password" | "email";
 	isLoading?: boolean;
+	setDeleteAccount?: (value: any) => void;
 }
 
 export const FormField = <T extends FieldValues>({
@@ -38,8 +39,10 @@ export const FormField = <T extends FieldValues>({
 						id={name}
 						type={type}
 						disabled={isLoading}
+						isLoading={isLoading}
 						className="input"
 						placeholder={placeholder}
+						showPasswordToggle={type === "password"}
 						{...field}
 					/>
 				</FormControl>

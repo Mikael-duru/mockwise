@@ -26,6 +26,7 @@ const SignInWithGoogle = () => {
 				name: user.displayName!,
 				email: user.email!,
 				photoURL: user.photoURL || "",
+				imgPublicId: "",
 			});
 
 			await storeIdToken({

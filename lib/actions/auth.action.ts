@@ -1,12 +1,13 @@
 "use server";
 
 import { auth, db } from "@/firebase/admin";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 const ONE_WEEK = 60 * 60 * 24 * 7;
 
 export const createUser = async (params: CreateUserParams) => {
-	const { uid, name, email, photoURL } = params;
+	const { uid, name, email, photoURL, imgPublicId } = params;
 	try {
 		const userRecord = await db.collection("users").doc(uid).get();
 
@@ -22,6 +23,7 @@ export const createUser = async (params: CreateUserParams) => {
 			name,
 			email,
 			photoURL,
+			imgPublicId,
 		});
 
 		return {
@@ -34,6 +36,29 @@ export const createUser = async (params: CreateUserParams) => {
 		return {
 			success: false,
 			message: "Failed to create user account",
+		};
+	}
+};
+
+export const updateUser = async (params: UpdateUserParams) => {
+	const { uid, photoURL, imgPublicId } = params;
+
+	try {
+		await db.collection("users").doc(uid).update({
+			photoURL,
+			imgPublicId,
+		});
+
+		return {
+			success: true,
+			message: "User updated successfully",
+		};
+	} catch (e: any) {
+		console.error("[Error updating user]", e);
+
+		return {
+			success: false,
+			message: "Failed to update user",
 		};
 	}
 };
@@ -76,6 +101,7 @@ export const setSessionCookie = async (idToken: string) => {
 export const getCurrentUser = async (): Promise<User | null> => {
 	const cookieStore = await cookies();
 	const sessionCookie = cookieStore.get("__session_mockWise")?.value;
+
 	if (!sessionCookie) return null;
 
 	try {

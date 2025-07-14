@@ -11,7 +11,7 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
 
 	return (
 		<div className="root-layout">
-			<Header />
+			<Header user={isUserAuthenticated} />
 
 			<main>{children}</main>
 		</div>

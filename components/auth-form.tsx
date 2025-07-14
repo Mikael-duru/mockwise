@@ -66,6 +66,7 @@ const AuthForm = ({ type }: { type: FormType }) => {
 					name: name!,
 					email,
 					photoURL: "",
+					imgPublicId: "",
 				});
 
 				if (!result?.success) {
@@ -133,8 +134,8 @@ const AuthForm = ({ type }: { type: FormType }) => {
 		<div className="relative card-border w-full max-w-[566px]">
 			<div className="flex flex-col gap-6 card max-sm:px-6 py-14 px-10">
 				<div className="flex flex-row gap-2 items-center justify-start mb-4">
-					<Image src={"/logo.svg"} alt="logo" width={20} height={14} />
-					<p className="text-primary-100 text-lg">MockWise</p>
+					<Image src={"/logo.svg"} alt="logo" width={28} height={22} />
+					<p className="text-primary-100 text-2xl">MockWise</p>
 				</div>
 
 				<h2 className="text-center">

@@ -25,13 +25,15 @@ const Home = async () => {
 	return (
 		<>
 			<section className="card-cta gap-14 mt-5">
-				<div className="flex flex-col gap-6 max-w-lg">
-					<h2>Ace Your Interviews with AI-Driven Practice & Smart Feedback</h2>
+				<div className="flex flex-col gap-6">
+					<div className="space-y-4 mb-2">
+						<h2 className="text-4xl">Ace Your Interviews with AI</h2>
 
-					<p className="text-lg">
-						Train with real interview scenarios and get helpful tips to level up
-						Your answer.
-					</p>
+						<p className="max-w-md">
+							Practice real interview questions, get smart feedback and tips to
+							boost your confidence.
+						</p>
+					</div>
 
 					<Button
 						className="btn-primary w-[250px] max-lg:mt-3 animate-bounce hover:animate-none active:scale-95 transition-transform"
@@ -56,7 +58,11 @@ const Home = async () => {
 				<div className="interviews-section">
 					{hasPastInterviews ? (
 						userInterviews?.map((interview: Interview) => (
-							<InterviewCard key={interview.id} {...interview} />
+							<InterviewCard
+								key={interview.id}
+								{...interview}
+								currentUserId={user?.id}
+							/>
 						))
 					) : (
 						<p className="pt-5 flex items-center gap-3 col-span-4">
@@ -78,7 +84,11 @@ const Home = async () => {
 				<div className="interviews-section">
 					{hasCommunityInterviews ? (
 						communityInterviews?.map((interview: Interview) => (
-							<InterviewCard key={interview.id} {...interview} />
+							<InterviewCard
+								key={interview.id}
+								{...interview}
+								currentUserId={user?.id}
+							/>
 						))
 					) : (
 						<p className="pt-5 flex items-center gap-3 col-span-4">

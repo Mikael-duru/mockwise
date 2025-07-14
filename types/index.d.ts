@@ -8,6 +8,7 @@ interface Feedback {
 		comment: string;
 	}>;
 	strengths: string[];
+	weaknesses: string[];
 	areasForImprovement: string[];
 	finalAssessment: string;
 	createdAt: string;
@@ -37,12 +38,13 @@ interface User {
 	name: string;
 	email: string;
 	photoURL: string;
+	imgPublicId: string;
 	id: string;
 }
 
 interface InterviewCardProps {
 	id?: Interview["id"];
-	userId?: string;
+	currentUserId?: string;
 	role: string;
 	type: string;
 	coverImage: string;
@@ -67,7 +69,6 @@ interface RouteParams {
 
 interface GetFeedbackByInterviewIdParams {
 	interviewId: Interview["id"];
-	userId: string;
 }
 
 interface GetCommunityInterviewsParams {
@@ -85,18 +86,16 @@ interface CreateUserParams {
 	name: string;
 	email: string;
 	photoURL: string;
+	imgPublicId: string;
+}
+
+interface UpdateUserParams {
+	uid: string;
+	photoURL: string;
+	imgPublicId: string;
 }
 
 type FormType = "sign-in" | "sign-up" | "reset-password";
-
-interface InterviewFormProps {
-	interviewId: Interview["id"];
-	role: string;
-	level: string;
-	type: string;
-	techStack: string[];
-	amount: number;
-}
 
 interface TechIconProps {
 	techStack: string[];

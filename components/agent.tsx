@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { vapi } from "@/lib/vapi.sdk";
 import { toast } from "sonner";
 import { interviewer } from "@/constants";
+import { createFeedback } from "@/lib/actions/interview.action";
 
 enum CallStatus {
 	INACTIVE = "INACTIVE",
@@ -36,8 +37,6 @@ const Agent = ({
 	const [callStatus, setCallStatus] = useState<CallStatus>(CallStatus.INACTIVE);
 	const [messages, setMessages] = useState<SavedMessage[]>([]);
 	const firstName = userName.split(" ")[0];
-
-	console.log("Agent type", type);
 
 	useEffect(() => {
 		const onCallStart = () => setCallStatus(CallStatus.ACTIVE);
@@ -77,15 +76,13 @@ const Agent = ({
 	}, []);
 
 	const handleGenerateFeedback = async (messages: SavedMessage[]) => {
-		console.log("Generate feedback here.");
+		const { success, feedbackId } = await createFeedback({
+			interviewId: interviewId!,
+			userId: userId!,
+			transcript: messages,
+		});
 
-		// TODO: Create a server action that generates feedback
-		const { success, id } = {
-			success: true,
-			id: "feedback-id",
-		};
-
-		if (success && id) {
+		if (success && feedbackId) {
 			router.push(`/interview/${interviewId}/feedback/`);
 		} else {
 			toast.error("Failed to generate feedback.");
@@ -103,16 +100,24 @@ const Agent = ({
 		}
 	}, [messages, callStatus, type, userId]);
 
+	/** Instead of passing workflow's ID to the method as the first variable, we have to modify it a bit.
+	 * vapi.start() checks if Agent is defined, and then falls back to Workflow if necessary, so we have to explicitly say that Agent is undefined **/
 	const handleCall = async () => {
 		setCallStatus(CallStatus.CONNECTING);
 
 		if (type === "generate") {
-			await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!, {
-				variableValues: {
-					username: firstName,
-					userid: userId,
-				},
-			});
+			await vapi.start(
+				undefined,
+				undefined,
+				undefined,
+				process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!,
+				{
+					variableValues: {
+						username: firstName,
+						userid: userId,
+					},
+				}
+			);
 		} else {
 			let formattedQuestions = "";
 

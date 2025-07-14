@@ -173,17 +173,18 @@ export const feedbackSchema = z.object({
 			comment: z.string(),
 		}),
 		z.object({
-			name: z.literal("Cultural Fit"),
+			name: z.literal("Cultural and Role Fit"),
 			score: z.number(),
 			comment: z.string(),
 		}),
 		z.object({
-			name: z.literal("Confidence and Clarity"),
+			name: z.literal("Confidence"),
 			score: z.number(),
 			comment: z.string(),
 		}),
 	]),
 	strengths: z.array(z.string()),
+	weaknesses: z.array(z.string()),
 	areasForImprovement: z.array(z.string()),
 	finalAssessment: z.string(),
 });

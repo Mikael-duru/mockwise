@@ -1,22 +1,27 @@
 import dayjs from "dayjs";
 import Image from "next/image";
-
-import { getRandomInterviewCover } from "@/lib/utils";
 import { CalendarDaysIcon, StarIcon } from "lucide-react";
-import { Button } from "./ui/button";
 import Link from "next/link";
-import TechIcons from "./tech-icons";
 
-const InterviewCard = ({
+import { Button } from "./ui/button";
+import TechIcons from "./tech-icons";
+import { getFeedbackByIds } from "@/lib/actions/interview.action";
+
+const InterviewCard = async ({
 	id,
-	userId,
+	currentUserId,
 	role,
 	type,
 	coverImage,
 	techStack,
 	createdAt,
 }: InterviewCardProps) => {
-	const feedback = null as Feedback | null;
+	let feedback = null;
+
+	if (currentUserId && id) {
+		feedback = await getFeedbackByIds({ interviewId: id, currentUserId });
+	}
+
 	const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
 	const formattedDate = dayjs(
 		feedback?.createdAt || createdAt || Date.now()
@@ -52,7 +57,7 @@ const InterviewCard = ({
 						</div>
 					</div>
 
-					<p className="line-clamp-3 mt-5">
+					<p className="line-clamp-2 mt-5">
 						{feedback?.finalAssessment ||
 							"You have not taken this interview yet. Take it now to improve your interview skills."}
 					</p>
