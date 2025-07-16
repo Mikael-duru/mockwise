@@ -85,8 +85,7 @@ const Agent = ({
 		if (success && feedbackId) {
 			router.push(`/interview/${interviewId}/feedback/`);
 		} else {
-			toast.error("Failed to generate feedback.");
-			router.push("/");
+			router.back();
 		}
 	};
 

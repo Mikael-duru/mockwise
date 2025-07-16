@@ -53,6 +53,20 @@ export const createFeedback = async (params: CreateFeedbackParams) => {
 	const { interviewId, userId, transcript } = params;
 
 	try {
+		// Check if user ever spoke - if not, don't generate feedback
+		const userHasSpoken = transcript.some(
+			(line) =>
+				line.role.toLowerCase() === "user" && line.content.trim().length > 0
+		);
+
+		if (!userHasSpoken) {
+			console.warn("No user responses found — skipping feedback.");
+			return {
+				success: false,
+				reason: "No user responses found.",
+			};
+		}
+
 		const formattedTranscript = transcript
 			.map(
 				(sentence: { role: string; content: string }) =>
