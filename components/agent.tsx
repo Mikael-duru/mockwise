@@ -55,6 +55,7 @@ const Agent = ({
 
 		const onError = (error: Error) => {
 			console.log("Vapi_Error:", error);
+			setCallStatus(CallStatus.INACTIVE);
 			toast.error(error?.message || "Call has ended.");
 		};
 
@@ -72,6 +73,30 @@ const Agent = ({
 			vapi.off("speech-start", onSpeechStart);
 			vapi.off("speech-end", onSpeechEnd);
 			vapi.off("error", onError);
+		};
+	}, []);
+
+	// SOLUTION to get rid of "Meeting has ended" error
+	useEffect(() => {
+		const originalError = console.error;
+		// override console.error to ignore "Meeting has ended" errors
+		console.error = function (msg, ...args) {
+			if (
+				msg &&
+				(msg.includes("Meeting has ended") ||
+					(args[0] && args[0].toString().includes("Meeting has ended")))
+			) {
+				console.log("Ignoring known error: Meeting has ended");
+				return; // don't pass to original handler
+			}
+
+			// pass all other errors to the original handler
+			return originalError.call(console, msg, ...args);
+		};
+
+		// restore original handler on unmount
+		return () => {
+			console.error = originalError;
 		};
 	}, []);
 
@@ -170,7 +195,7 @@ const Agent = ({
 
 				<div className="card-border">
 					<div className="card-content">
-						<Avatar className="size-[120px]">
+						<Avatar className="size-[120px] border">
 							<AvatarImage src={userPhotoURL} alt={`@${userName}`} />
 							<AvatarFallback>
 								<UserCheck2Icon size={60} />
@@ -201,14 +226,17 @@ const Agent = ({
 			<div className="w-full flex justify-center">
 				{callStatus !== "ACTIVE" ? (
 					<button
-						className="relative btn-call active:scale-95 transition-transform"
+						className={cn(
+							"relative btn-call active:scale-95 transition-transform",
+							callStatus === "CONNECTING" ? "bg-[#ADD8E625]" : "bg-success-100"
+						)}
 						onClick={handleCall}
 						aria-label={isCallInactiveOrFinished ? "Start Call" : "Connecting"}
 						disabled={!isCallInactiveOrFinished}
 					>
 						<span
 							className={cn(
-								"absolute inset-0 bg-green-100 animate-ping rounded-full opacity-50",
+								"absolute inset-0 bg-green-100 animate-ping rounded-full opacity-40",
 								callStatus !== "CONNECTING" && "hidden"
 							)}
 						/>

@@ -14,6 +14,10 @@ const RootLayout = async ({ children }: { children: ReactNode }) => {
 			<Header user={isUserAuthenticated} />
 
 			<main>{children}</main>
+
+			<footer className="text-center text-sm text-gray-500 mt-10">
+				<p>&copy; 2025 MockWise. All rights reserved.</p>
+			</footer>
 		</div>
 	);
 };

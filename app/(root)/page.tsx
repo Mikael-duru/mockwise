@@ -27,7 +27,7 @@ const Home = async () => {
 			<section className="card-cta gap-14 mt-5">
 				<div className="flex flex-col gap-6">
 					<div className="space-y-4 mb-2">
-						<h2 className="text-4xl">Ace Your Interviews with AI</h2>
+						<h2 className="text-4xl pt-4">Ace Your Interviews with AI</h2>
 
 						<p className="max-w-md">
 							Practice real interview questions, get smart feedback and tips to
@@ -73,7 +73,7 @@ const Home = async () => {
 				<div className="space-y-3">
 					<h2 className="">Community Interviews</h2>
 					<p className="text-lg font-medium">
-						Explore community-generated interviews
+						Explore mock interviews created by other users.
 					</p>
 				</div>
 

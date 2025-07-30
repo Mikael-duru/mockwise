@@ -21,7 +21,12 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" className="dark">
-			<body className={`${monaSans.className} antialiased pattern`}>
+			<body className={`${monaSans.className} antialiased`}>
+				<div className="fixed inset-0 -z-1">
+					<div className="absolute inset-0 bg-gradient-to-b from-background via-background to-background"></div>
+					<div className="absolute inset-0 bg-[linear-gradient(var(--grid-color)_1px,transparent_1px),linear-gradient(90deg,var(--grid-color)_1px,transparent_1px)] bg-[size:60px_60px]"></div>
+				</div>
+
 				{children}
 
 				<Toaster richColors />

@@ -63,13 +63,13 @@ const InterviewCard = async ({
 					</p>
 				</div>
 
-				<div className="flex flex-row justify-between items-center gap-5 flex-wrap">
-					<div className="shrink-0 mr-5">
+				<div className="flex flex-col justify-center items-start gap-5 flex-wrap">
+					<div className="shrink-0">
 						<TechIcons techStack={techStack} />
 					</div>
 
 					<Button
-						className="btn-primary flex-1 active:scale-95 transition-transform duration-300"
+						className="btn-primary flex-1 active:scale-95 transition-transform duration-300 w-full"
 						asChild
 					>
 						<Link

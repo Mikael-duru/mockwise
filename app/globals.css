@@ -23,11 +23,12 @@
 	--color-dark-300: #242633;
 
 	--font-mona-sans: "Mona Sans", sans-serif;
-
-	--bg-pattern: url("/pattern.svg");
 }
 
 :root {
+	/* Custom Cyberpunk UI Variables */
+	--grid-color: rgba(24, 206, 242, 0.05);
+
 	--radius: 0.625rem;
 	--background: oklch(1 0 0);
 	--foreground: oklch(0.145 0 0);
@@ -160,10 +161,10 @@
 
 @layer components {
 	.btn-call {
-		@apply inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 bg-success-100 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-success-200 hover:bg-success-200 min-w-28 cursor-pointer items-center justify-center overflow-visible;
+		@apply inline-block px-7 py-3 font-bold text-sm leading-5 text-white transition-colors duration-150 border border-transparent rounded-full shadow-sm focus:outline-none focus:shadow-2xl active:bg-success-200 hover:bg-success-200 min-w-28 cursor-pointer items-center justify-center overflow-visible;
 
 		.span {
-			@apply bg-success-100 h-[85%] w-[65%];
+			@apply h-[85%] w-[65%];
 		}
 	}
 
@@ -262,7 +263,7 @@
 	}
 
 	.root-layout {
-		@apply flex mx-auto max-w-7xl flex-col gap-12 my-12 px-16 max-sm:px-4 max-sm:my-8;
+		@apply flex mx-auto container !max-w-7xl flex-col gap-12 px-8 max-sm:px-5 py-10;
 	}
 
 	.card-cta {
@@ -270,7 +271,7 @@
 	}
 
 	.interviews-section {
-		@apply grid gap-4 grid-cols-[repeat(auto-fill,minmax(300px,1fr))] max-sm:grid-cols-1;
+		@apply grid gap-4 grid-cols-[repeat(auto-fill,minmax(320px,1fr))] max-sm:grid-cols-1;
 	}
 
 	.interview-text {
@@ -300,10 +301,6 @@
 
 @utility border-gradient {
 	@apply bg-gradient-to-b from-[#4B4D4F] to-[#4B4D4F33];
-}
-
-@utility pattern {
-	@apply bg-[url('/pattern.svg')] bg-top bg-no-repeat;
 }
 
 @utility blue-gradient-dark {
